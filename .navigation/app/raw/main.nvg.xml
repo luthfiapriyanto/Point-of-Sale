@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.tools.idea.editors.navigation.model.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.luthf.pointofsale.MainActivity"/>
+      <point      
+        x = "1004"      
+        y = "-32"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.luthf.pointofsale.Done"/>
+      <point      
+        x = "2788"      
+        y = "172"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.luthf.pointofsale.Coba"/>
+      <point      
+        x = "4187"      
+        y = "328"/>
+    </statePointEntry>
+  </locations>
+</navigationModel>

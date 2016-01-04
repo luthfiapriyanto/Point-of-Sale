@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Point Of Sale</string>
+
+    <string-array name="all">
+        <item>@drawable/burger</item>
+        <item>@drawable/cappucino</item>
+        <item>@drawable/cincau</item>
+        <item>@drawable/eskrim</item>
+        <item>@drawable/nasigoreng</item>
+        <item>@drawable/pizza</item>
+        <item>@drawable/sate</item>
+    </string-array>
+
+    <string-array name="makanan">
+        <item>@drawable/burger</item>
+        <item>@drawable/nasigoreng</item>
+        <item>@drawable/pizza</item>
+        <item>@drawable/sate</item>
+    </string-array>
+
+    <string-array name="minuman">
+        <item>@drawable/cappucino</item>
+        <item>@drawable/cincau</item>
+        <item>@drawable/eskrim</item>
+    </string-array>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_open">Open</string>
+    <string name="action_save">Save</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

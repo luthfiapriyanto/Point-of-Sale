@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    tools:context="com.example.luthf.pointofsale.Register">
+
+    <RelativeLayout
+        android:elevation="10dp"
+        android:background="@color/white"
+        android:layout_marginTop="100dp"
+        android:layout_width="400dp"
+        android:layout_height="340dp"
+        android:layout_centerHorizontal="true">
+
+        <EditText
+            android:hint="Bussiness Name"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText3"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:hint="Email"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText4"
+            android:layout_below="@+id/editText3"
+            android:layout_centerHorizontal="true" />
+
+        <EditText android:hint="Phone Number"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:ems="10"
+            android:id="@+id/editText5"
+            android:layout_below="@+id/editText4"
+            android:layout_centerHorizontal="true" />
+
+        <EditText android:hint="Password"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/editText6"
+            android:layout_below="@+id/editText5"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:hint="Repeat Password"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/editText7"
+            android:layout_below="@+id/editText6"
+            android:layout_alignLeft="@+id/editText6"
+            android:layout_alignStart="@+id/editText6" />
+
+        <Button
+            android:textColor="@color/white"
+            android:background="@drawable/charge"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:text="Register New Account"
+            android:id="@+id/button5"
+            android:layout_above="@+id/button6"
+            android:layout_alignLeft="@+id/editText7"
+            android:layout_alignStart="@+id/editText7" />
+
+        <Button
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/charge1"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:text="Sign In"
+            android:id="@+id/button6"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@+id/button5"
+            android:layout_alignStart="@+id/button5" />
+    </RelativeLayout>
+
+    <TextView
+        android:textSize="30dp"
+        android:layout_marginTop="40dp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Point of Sale"
+        android:id="@+id/textView48"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00BCD5</color>
+    <color name="colorPrimaryDark">#4DD0E2</color>
+    <color name="colorAccent">#C9C9C9</color>
+
+    <color name="blue">#4DD0E2</color>
+    <color name="white">#ffffff</color>
+    <color name="dead">#bd9b53</color>
+    <color name="button">#FF9801</color>
+
+    <color name="card">#969696</color>
+    <color name="cardpress">#C9C9C9</color>
+</resources>

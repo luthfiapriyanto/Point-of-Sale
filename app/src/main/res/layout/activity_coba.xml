@@ -1,0 +1,252 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.luthf.pointofsale.Coba">
+    <TextView
+        android:textSize="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relatif1"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/relativeLayout2">
+
+        <RadioGroup
+            android:id="@+id/fancy_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:padding="20dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/first"
+                android:layout_width="71dp"
+                android:layout_height="71dp"
+                android:button="@null"
+                android:background="@drawable/radio_states_green"
+                android:padding="10dp"
+                android:textColor="@drawable/radio_text"
+                android:layout_weight=".335"
+                android:gravity="center"/>
+
+            <RadioButton
+                android:id="@+id/second"
+                android:layout_width="71dp"
+                android:layout_height="71dp"
+                android:background="@drawable/radio_states_green"
+                android:button="@null"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@drawable/radio_text"
+                android:layout_weight=".335"
+                android:gravity="center"/>
+
+            <RadioButton
+                android:id="@+id/third"
+                android:layout_width="71dp"
+                android:layout_height="71dp"
+                android:background="@drawable/radio_states_green"
+                android:button="@null"
+                android:padding="10dp"
+                android:textColor="@drawable/radio_text"
+                android:layout_weight=".335"
+                android:gravity="center"/>
+
+            <RadioButton
+                android:layout_width="71dp"
+                android:layout_height="71dp"
+                android:background="@drawable/radio_states_green"
+                android:button="@null"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@drawable/radio_text"
+                android:layout_weight=".335"
+                android:gravity="center"
+                android:id="@+id/fourth" />
+        </RadioGroup>
+    </RelativeLayout>
+
+    <RelativeLayout
+
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_centerHorizontal="true">
+
+        <RelativeLayout
+            android:clickable="true"
+            android:background="@drawable/grid_selector"
+            android:layout_marginRight="20dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:id="@+id/relativeLayout3"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/relativeLayout4"
+            android:layout_toStartOf="@+id/relativeLayout4">
+            <FrameLayout
+                android:background="@android:color/white"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true">
+                <ImageView
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/card"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp" />
+                <TextView
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:text="Card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:clickable="true"
+            android:background="@drawable/grid_selector"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/relativeLayout4">
+            <FrameLayout
+                android:background="@android:color/white"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" >
+
+                <ImageView
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/voucher"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp" />
+
+                <TextView
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:text="Voucher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:clickable="true"
+            android:background="@drawable/grid_selector"
+            android:layout_marginLeft="20dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:id="@+id/relativeLayout5"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/relativeLayout4"
+            android:layout_toEndOf="@+id/relativeLayout4">
+
+            <FrameLayout
+                android:background="@android:color/white"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" >
+
+                <ImageView
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/other"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp" />
+
+                <TextView
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:text="Other"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:background="@android:color/holo_orange_light"
+        android:text="Pay"
+        android:textColor="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pay"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_marginRight="30dp"
+        android:background="@android:color/holo_orange_light"
+        android:text="Cancel"
+        android:textColor="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:layout_alignTop="@+id/pay"
+        android:layout_toLeftOf="@+id/pay"
+        android:layout_toStartOf="@+id/pay" />
+
+    <RelativeLayout
+        android:id="@+id/relatif1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true">
+        <EditText
+            android:textSize="20dp"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="#E6E6E6"
+            android:inputType="numberDecimal"
+            android:digits="0123456789,."
+            android:padding="15dp"
+            android:singleLine="true"
+            android:textColor="#222222"
+            android:textColorHint="#999999"
+            android:id="@+id/editText"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_marginRight="5dp"
+            android:textSize="30dp"
+            android:text="Rp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/editText"
+            android:layout_toStartOf="@+id/editText" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
