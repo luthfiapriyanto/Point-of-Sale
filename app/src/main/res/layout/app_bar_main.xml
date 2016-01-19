@@ -57,6 +57,16 @@
                     android:layout_alignTop="@+id/customamount"
                     android:layout_toRightOf="@+id/customamount"
                     android:layout_toEndOf="@+id/customamount" />
+
+                <EditText
+                    android:hint="Search"
+                    android:visibility="gone"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editTextsearch"
+                    android:layout_centerVertical="true"
+                    android:layout_alignRight="@+id/search"
+                    android:layout_alignEnd="@+id/search" />
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>

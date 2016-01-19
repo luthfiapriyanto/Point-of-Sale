@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class GridViewAdapter extends ArrayAdapter<ImageItem> {
 
@@ -51,4 +52,22 @@ public class GridViewAdapter extends ArrayAdapter<ImageItem> {
         TextView imageTitle;
         ImageView image;
     }
+
+    // Filter Class
+    /*
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        worldpopulationlist.clear();
+        if (charText.length() == 0) {
+            worldpopulationlist.addAll(arraylist);
+        } else {
+            for (ArrayList wp : arraylist) {
+                if (wp.getCountry().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    worldpopulationlist.add(wp);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+    */
 }

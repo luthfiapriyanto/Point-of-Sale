@@ -1,14 +1,19 @@
 package com.example.luthf.pointofsale;
 
+import android.animation.LayoutTransition;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -29,6 +34,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
@@ -36,28 +42,33 @@ import android.widget.ViewSwitcher;
 import com.example.luthf.pointofsale.Adapter.Event;
 import com.example.luthf.pointofsale.Adapter.EventAdapter;
 import com.example.luthf.pointofsale.Adapter.NumberTextWatcher;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.lang.reflect.Array;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
 
     private List<Event> eventList = new ArrayList<Event>();
     private ListView listView;
     private EventAdapter adapter;
     private GridView gridView;
     private GridViewAdapter gridAdapter;
+    ArrayAdapter<String> adapterforsearch;
+    private ListView lv;
+    ArrayList<HashMap<String, String>> productList;
 
     int p = 0;
 
-
     //arrayall
-    private String[] nameall = new String[]{
+    String[] nameall = new String[]{
             "Burger", "Cappuccino", "Es Cincau", "Es Krim", "Nasi Goreng", "Pizza", "Sate Ayam"
     };
     private Integer[] priceall = new Integer[]{
@@ -66,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //arrayminuman
     private String[] namemakanan = new String[]{
-            "Burger","Nasi Goreng", "Pizza", "Sate Ayam"
+            "Burger", "Nasi Goreng", "Pizza", "Sate Ayam"
     };
     private Integer[] pricemakanan = new Integer[]{
             25000, 32000, 23000, 50000
@@ -79,6 +90,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Integer[] priceminuman = new Integer[]{
             30000, 40000, 12000
     };
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
 
     @Override
@@ -92,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ed.addTextChangedListener(new NumberTextWatcher(ed));
 
 
-        //action bar button
+        //action bar button category
         findViewById(R.id.product).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,16 +127,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 GridView grid = (GridView) findViewById(R.id.gv_item);
-                RelativeLayout calc = (RelativeLayout) findViewById(R.id.calc);
+                RelativeLayout calculator = (RelativeLayout) findViewById(R.id.calc);
                 LinearLayout tet = (LinearLayout) findViewById(R.id.tet);
                 grid.setVisibility(View.GONE);
                 tet.setVisibility(View.GONE);
-                calc.setVisibility(View.VISIBLE);
+                calculator.setVisibility(View.VISIBLE);
             }
         });
 
-        final TextView result = (TextView) findViewById(R.id.result);
+        final Button product = (Button) findViewById(R.id.product);
+        final Button favorit = (Button) findViewById(R.id.favorite);
+        final Button customamount = (Button) findViewById(R.id.customamount);
 
+        final EditText search = (EditText) findViewById(R.id.editTextsearch);
+
+        //action bar search
+        findViewById(R.id.search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                product.setVisibility(View.INVISIBLE);
+                favorit.setVisibility(View.INVISIBLE);
+                customamount.setVisibility(View.INVISIBLE);
+                search.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        final TextView result = (TextView) findViewById(R.id.result);
         final Button btdel = (Button) findViewById(R.id.buttinDone);
         final Button btdone = (Button) findViewById(R.id.buttonDel);
 
@@ -133,12 +166,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        int d = 0;
+        //int d = 0;
 
         gridView = (GridView) findViewById(R.id.gv_item);
         gridAdapter = new GridViewAdapter(this, R.layout.item_grid, getData());
         gridView.setAdapter(gridAdapter);
 
+        //search method
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                String text = search.getText().toString().toLowerCase(Locale.getDefault());
+                //filter(text);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
 
 
         Button amount = (Button) findViewById(R.id.total);
@@ -156,16 +208,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 String resu = result.getText().toString();
-                if (resu.length()>3){
-                    resu = resu.substring(0, resu.length()-1);
+                if (resu.length() > 3) {
+                    resu = resu.substring(0, resu.length() - 1);
                     result.setText(resu);
                 }
             }
         });
 
-//custom amount insert to list
+        //custom amount insert to list
         findViewById(R.id.buttinDone).setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 final ListView list = (ListView) findViewById(R.id.list);
@@ -177,8 +228,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 TextView result = (TextView) findViewById(R.id.result);
                 String resu = result.getText().toString();
 
-                if (resu.length()<=3){
-                    Log.d("lenh","lenh"+resu.length());
+                if (resu.length() <= 3) {
+                    Log.d("lenh", "lenh" + resu.length());
                     GridView grid = (GridView) findViewById(R.id.gv_item);
                     RelativeLayout calc = (RelativeLayout) findViewById(R.id.calc);
                     LinearLayout tet = (LinearLayout) findViewById(R.id.tet);
@@ -188,14 +239,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     calc.setVisibility(View.GONE);
                     result.setText("Rp");
                 }
-                else {
 
-                    if (resu.contains("R")){
-                        resu = resu.replace("R","");
-                        resu = resu.replace("p","");
-                        resu = resu.replace(" ","");
-                        resu = resu.replace(".","");
-                    }
+                else {
+                    replace(resu);
 
                     Event event = new Event();
                     event.setName("Other");
@@ -210,31 +256,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     NumberFormat numFormat = NumberFormat.getInstance(Locale.GERMAN);
                     String subtot = subtotal.getText().toString();
 
-                    if (subtot.contains("R")){
-                        subtot = subtot.replace("R","");
-                        subtot = subtot.replace("p","");
-                        subtot = subtot.replace(" ","");
-                        subtot = subtot.replace(".","");
-                        //subtot = subtot.replace("0","");
-                    }
+                    replace(subtot);
+
 
                     //Subtotal
                     int sub = Integer.valueOf(subtot);
                     int re = Integer.valueOf(resu);
-                    sub = sub+ re;
+                    sub = sub + re;
                     subtotal.setText("Rp " + numFormat.format(sub));
 
                     //VAT
                     TextView vat = (TextView) findViewById(R.id.vat);
                     String vati = subtotal.getText().toString();
 
-                    if (vati.contains("R")){
-                        vati = vati.replace("R","");
-                        vati = vati.replace("p","");
-                        vati = vati.replace(" ","");
-                        vati = vati.replace(".","");
-                        //vati = vati.replace("0","");
-                    }
+                    replace(vati);
 
                     double click = Double.parseDouble(String.valueOf(vati));
                     double ma = click * (10.0 / 100.0);
@@ -360,14 +395,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 TextView result = (TextView) findViewById(R.id.result);
                 String resu = result.getText().toString();
 
-                if (resu.contains("R")){
+                if (resu.contains("R")) {
                     TextView subtotal = (TextView) findViewById(R.id.subtotal);
                     subtotal.setText("Rp " + numFormat.format(clickcount));
-                }
-                else {
+                } else {
                     int re = Integer.valueOf(resu);
                     TextView subtotal = (TextView) findViewById(R.id.subtotal);
-                    subtotal.setText("Rp " + numFormat.format(clickcount+re));
+                    subtotal.setText("Rp " + numFormat.format(clickcount + re));
                 }
 
                 double click = Double.parseDouble(String.valueOf(clickcount));
@@ -422,15 +456,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String strin = stri.getText().toString();
                 String edit = ed.getText().toString();
 
-                if (edit.contains(",")){
+                if (edit.contains(",")) {
                     edit = edit.replaceAll(",", "");
                 }
 
                 int ro = Integer.valueOf(strin);
                 if (edit.trim().length() <= 0) {
                     Toast.makeText(getApplicationContext(), "Amount must have value", Toast.LENGTH_LONG).show();
-                    }
-                    else if (Integer.valueOf(edit) < ro) {
+                } else if (Integer.valueOf(edit) < ro) {
                     Toast.makeText(getApplicationContext(), "Amount must valid", Toast.LENGTH_LONG).show();
                 } else {
                     Intent intent = new Intent(MainActivity.this, Done.class);
@@ -472,11 +505,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 
     //int total = 0;
     int u = 0;
+
     public void onButtonClick(View v) {
         Button button = (Button) v;
         String bText = button.getText().toString();
@@ -484,12 +521,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //total += value;
         TextView myTextView = (TextView) findViewById(R.id.result);
 
-        if (u==0){
+        if (u == 0) {
             myTextView.setText("");
-            myTextView.setText("Rp "+myTextView.getText() + bText);
+            myTextView.setText("Rp " + myTextView.getText() + bText);
             u = u + 1;
-        }
-        else{
+        } else {
             myTextView.setText(myTextView.getText() + bText);
         }
         //myTextView.setText(Integer.toString(total));
@@ -504,7 +540,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
 
 
     @Override
@@ -527,8 +562,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.action_open) {
 
             return true;
-        }
-        else if (id == R.id.action_save){
+        } else if (id == R.id.action_save) {
             return true;
         }
 
@@ -540,30 +574,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         boolean checked = ((RadioButton) view).isChecked();
 
         // Check which radio button was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.all:
                 if (checked) {
                     gridAdapter = new GridViewAdapter(this, R.layout.item_grid, getData());
                     gridView.setAdapter(gridAdapter);
-                    p=1;
+                    p = 1;
                 }
                 break;
             case R.id.makanan:
                 if (checked) {
                     gridAdapter = new GridViewAdapter(this, R.layout.item_grid, getDataMakanan());
                     gridView.setAdapter(gridAdapter);
-                    p=2;
+                    p = 2;
                 }
                 break;
             case R.id.minuman:
                 if (checked) {
                     gridAdapter = new GridViewAdapter(this, R.layout.item_grid, getDataMinuman());
                     gridView.setAdapter(gridAdapter);
-                    p=3;
+                    p = 3;
                 }
                 break;
         }
     }
+
+    //Search Method Class
+    /*
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        gridAdapter.clear();
+        if (charText.length() == 0) {
+            gridView.setAdapter(gridAdapter);
+        } else {
+            for (GridViewAdapter wp : gridAdapter) {
+                if (gridAdapter.getData().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    gridView.add(wp);
+                }
+            }
+        }
+        gridAdapter.notifyDataSetChanged();
+    }
+*/
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -583,13 +635,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_setting) {
 
-        } else if (id == R.id.nav_signout){
+        } else if (id == R.id.nav_signout) {
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //class to make pure amount value without any symbol
+    public void replace (String value){
+        if (value.contains("R")) {
+            value = value.replace("R", "");
+            value = value.replace("p", "");
+            value = value.replace(" ", "");
+            value = value.replace(".", "");
+            //subtot = subtot.replace("0","");
+        }
     }
 
     private ArrayList<ImageItem> getData() {
@@ -601,6 +664,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return imageItems;
     }
+
     private ArrayList<ImageItem> getDataMakanan() {
         final ArrayList<ImageItem> imageItems = new ArrayList<>();
         TypedArray imgs = getResources().obtainTypedArray(R.array.makanan);
@@ -610,6 +674,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return imageItems;
     }
+
     private ArrayList<ImageItem> getDataMinuman() {
         final ArrayList<ImageItem> imageItems = new ArrayList<>();
         TypedArray imgs = getResources().obtainTypedArray(R.array.minuman);
@@ -618,5 +683,46 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             imageItems.add(new ImageItem(bitmap, nameminuman[i]));
         }
         return imageItems;
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.example.luthf.pointofsale/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.example.luthf.pointofsale/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 }
